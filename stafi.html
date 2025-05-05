@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemi Admin - Shkolla Jonë</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #2980b9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            transition: all 0.3s ease;
+        }
+
+        /* Stilet për login form */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transition: all 0.3s ease;
+        }
+
+        .login-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            transform: scale(1);
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .login-form.hidden {
+            transform: scale(0.9);
+            opacity: 0;
+            display: none;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: var(--accent);
+            margin-top: 1rem;
+            text-align: center;
+            height: 20px;
+            font-weight: 500;
+        }
+
+        /* Stilet për faqen administrative */
+        .admin-page {
+            display: none;
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .admin-page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-header h2 i {
+            margin-right: 10px;
+        }
+
+        .admin-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .welcome-message {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .welcome-message h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--secondary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .logout-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        /* Stilet e reja për seksionet e zgjeruara */
+        .section-content {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            overflow: auto;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .meeting-item, .training-item, .document-item, .task-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .meeting-item:hover, .training-item:hover, .document-item:hover, .task-item:hover {
+            background-color: #f0f7fd;
+        }
+
+        .meeting-item:last-child, .training-item:last-child, .document-item:last-child, .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .meeting-date, .training-date, .task-deadline {
+            font-weight: bold;
+            color: var(--primary);
+            min-width: 140px;
+        }
+
+        .meeting-topic, .training-topic, .document-title, .task-title {
+            flex-grow: 1;
+            margin: 0 1rem;
+            color: #444;
+            min-width: 200px;
+        }
+
+        .meeting-location, .training-trainer, .document-category, .task-assignee {
+            margin: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+
+        .meeting-actions, .training-actions, .document-actions, .task-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-sm i {
+            margin-right: 5px;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background-color: var(--info);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #2472a4;
+            transform: translateY(-2px);
+        }
+
+        .add-new-form {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #e8f4fc;
+            border-radius: 8px;
+            border: 1px dashed var(--secondary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 200px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select.form-control {
+            height: auto;
+        }
+
+        /* Tabs stilet */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab-btn i {
+            margin-right: 8px;
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--primary);
+            background-color: #f5f5f5;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            width: 100%;
+            overflow: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Status indicators */
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background-color: #fff4e5;
+            color: #e67e22;
+        }
+
+        .status-completed {
+            background-color: #e8f8f0;
+            color: #27ae60;
+        }
+
+        .status-cancelled {
+            background-color: #fdecea;
+            color: #e74c3c;
+        }
+
+        .status-in-progress {
+            background-color: #e8f4fc;
+            color: #2980b9;
+        }
+
+        /* Calendar preview */
+        .calendar-preview {
+            margin-top: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-month {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background-color: #e8f4fc;
+        }
+
+        .calendar-day.today {
+            background-color: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.event {
+            background-color: #e8f8f0;
+            position: relative;
+        }
+
+        .calendar-day.event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        /* Statistics cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Task progress */
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Notification badge */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .meeting-item, .training-item, .document-item, .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .meeting-actions, .training-actions, .document-actions, .task-actions {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .meeting-date, .training-date, .task-deadline,
+            .meeting-topic, .training-topic, .document-title, .task-title,
+            .meeting-location, .training-trainer, .document-category, .task-assignee {
+                margin: 0.5rem 0;
+                min-width: 100%;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                display: block;
+            }
+            
+            .tab-btn {
+                display: inline-block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 1.5rem;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .logout-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-form" id="loginForm">
+            <h2><i class="fas fa-user-shield"></i> Hyrje në Sistemin Staff</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Emri i përdoruesit</label>
+                    <input type="text" id="username" placeholder="Shkruani emrin e përdoruesit" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Fjalëkalimi</label>
+                    <input type="password" id="password" placeholder="Shkruani fjalëkalimin" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Hyr në Sistem</button>
+                <div class="error-message" id="loginError"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Page (e fshehur fillimisht) -->
+    <div class="admin-page" id="adminPage">
+        <div class="admin-header">
+            <h2><i class="fas fa-school"></i> Mirësevini në Panelin Administrativ</h2>
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Dil nga Sistemi</button>
+        </div>
+        
+        <div class="admin-content fade-in">
+            <div class="welcome-message">
+                <h1>Përshëndetje, <span id="adminName">Administrator</span>!</h1>
+                <p>Sistemi ju lejon të menaxhoni të gjitha aspektet e shkollës nga një vend i vetëm.</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-file-alt"></i> Dokumentet</div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-calendar-alt"></i> Mbledhjet</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Këtë muaj</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-chalkboard-teacher"></i> Trajnimet</div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Aktive</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-tasks"></i> Detyrat</div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Në pritje</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3><i class="fas fa-file-alt"></i> Dokumentet e Brendshme</h3>
+                    <p>Menaxhoni të gjitha dokumentet, rregulloret dhe protokollet e shkollës në një vend të vetëm.</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleSection('documentsContent')">
+                        <i class="fas fa-folder-open"></i> Shiko Dokumentet
+                    </button>
+                    
+                    <div class="section-content" id="documentsContent">
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="openTab(event, 'documentsList')">
+                                <i class="fas fa-list"></i> Lista e Dokumenteve
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'addDocument')">
+                                <i class="fas fa-plus"></i> Shto Dokument të Ri
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'documentCategories')">
+                                <i class="fas fa-tags"></i> Kategoritë
+                            </button>
+                        </div>
+                        
+                        <div id="documentsList" class="tab-content active">
+                            <div class="document-item">
+                                <span class="document-date">15 Maj 2023</span>
+                                <span class="document-title">Rregullorja e Shkollës 2023-2024</span>
+                                <span class="document-category"><span class="status-badge status-completed">Rregullore</span></span>
+                                <div class="document-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showDocumentModal('Rregullorja e Shkollës')">
+                                        <i class="fas fa-eye"></i> Shiko
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edito
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Fshi
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="document-item">
+                                <span class="document-date">10 Prill 2023</span>
+                                <span class="document-title">Planet Mësimore për Vitin 2023-2024</span>
+                                <span class="document-category"><span class="status-badge status-in-progress">Plan Mësimor</span></span>
+                                <div class="document-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showDocumentModal('Planet Mësimore')">
+                                        <i class="fas fa-eye"></i> Shiko
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edito
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Fshi
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="document-item">
+                                <span class="document-date">05 Mars 2023</span>
+                                <span class="document-title">Protokollet e Mbledhjeve të Stafit</span>
+                                <span class="document-category"><span class="status-badge status-pending">Protokoll</span></span>
+                                <div class="document-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showDocumentModal('Protokollet e Mbledhjeve')">
+                                        <i class="fas fa-eye"></i> Shiko
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edito
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Fshi
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="document-item">
+                                <span class="document-date">20 Janar 2023</span>
+                                <span class="document-title">Raportet Vjetore 2022-2023</span>
+                                <span class="document-category"><span class="status-badge status-completed">Raport</span></span>
+                                <div class="document-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showDocumentModal('Raportet Vjetore')">
+                                        <i class="fas fa-eye"></i> Shiko
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edito
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Fshi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="addDocument" class="tab-content">
+                            <div class="add-new-form">
+                                <div class="form-group">
+                                    <label for="documentTitle"><i class="fas fa-heading"></i> Titulli i Dokumentit</label>
+                                    <input type="text" id="documentTitle" class="form-control" placeholder="Shkruani titullin e dokumentit">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="documentDate"><i class="fas fa-calendar"></i> Data</label>
+                                        <input type="date" id="documentDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="documentCategory"><i class="fas fa-tag"></i> Kategoria</label>
+                                        <select id="documentCategory" class="form-control">
+                                            <option value="rregullore">Rregullore</option>
+                                            <option value="plan">Plan Mësimor</option>
+                                            <option value="raport">Raport</option>
+                                            <option value="protokoll">Protokoll</option>
+                                            <option value="tjetër">Tjetër</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="documentFile"><i class="fas fa-file-upload"></i> Ngarko Dokumentin</label>
+                                    <input type="file" id="documentFile" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="documentDescription"><i class="fas fa-align-left"></i> Përshkrimi</label>
+                                    <textarea id="documentDescription" class="form-control" placeholder="Përshkrim i shkurtër i dokumentit"></textarea>
+                                </div>
+                                <button class="btn btn-success"><i class="fas fa-save"></i> Ruaj Dokumentin</button>
+                            </div>
+                        </div>
+                        
+                        <div id="documentCategories" class="tab-content">
+                            <div class="add-new-form">
+                                <div class="form-group">
+                                    <label for="newCategoryName"><i class="fas fa-tag"></i> Emri i Kategorisë së Re</label>
+                                    <input type="text" id="newCategoryName" class="form-control" placeholder="Shkruani emrin e kategorisë">
+                                </div>
+                                <button class="btn btn-success" style="margin-bottom: 1.5rem;"><i class="fas fa-plus"></i> Shto Kategori</button>
+                                
+                                <h4 style="margin-bottom: 1rem;"><i class="fas fa-list"></i> Kategoritë Ekzistuese</h4>
+                                <div class="document-item">
+                                    <span class="document-title">Rregullore</span>
+                                    <div class="document-actions">
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="document-item">
+                                    <span class="document-title">Plan Mësimor</span>
+                                    <div class="document-actions">
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="document-item">
+                                    <span class="document-title">Raport</span>
+                                    <div class="document-actions">
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="document-item">
+                                    <span class="document-title">Protokoll</span>
+                                    <div class="document-actions">
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-calendar-alt"></i> Orari i Mbledhjeve</h3>
+                    <p>Planifikoni, menaxhoni dhe gjurmoni të gjitha mbledhjet e stafit dhe mësuesve.</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleSection('meetingsContent')">
+                        <i class="fas fa-users"></i> Shiko Mbledhjet
+                    </button>
+                    
+                    <div class="section-content" id="meetingsContent">
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="openTab(event, 'upcomingMeetings')">
+                                <i class="fas fa-clock"></i> Mbledhjet e Ardhshme
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'pastMeetings')">
+                                <i class="fas fa-history"></i> Mbledhjet e Kaluara
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'scheduleMeeting')">
+                                <i class="fas fa-plus"></i> Planifiko të Re
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'meetingCalendar')">
+                                <i class="fas fa-calendar"></i> Kalendari
+                            </button>
+                        </div>
+                        
+                        <div id="upcomingMeetings" class="tab-content active">
+                            <div class="meeting-item">
+                                <span class="meeting-date">15 Maj 2023 - 10:00</span>
+                                <span class="meeting-topic">Mbledhje e Stafit Pedagogjik</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Salla e Mësuesve</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Mbledhje e Stafit Pedagogjik')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="meeting-item">
+                                <span class="meeting-date">22 Maj 2023 - 14:00</span>
+                                <span class="meeting-topic">Trajnim për Metodat e Reja Mësimore</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Laboratori i Informatikës</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Trajnim për Metodat e Reja Mësimore')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="meeting-item">
+                                <span class="meeting-date">05 Qershor 2023 - 09:30</span>
+                                <span class="meeting-topic">Përgatitje për Vitin e Ri Shkollor</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Salla e Konferencave</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Përgatitje për Vitin e Ri Shkollor')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="pastMeetings" class="tab-content">
+                            <div class="meeting-item">
+                                <span class="meeting-date">10 Prill 2023 - 10:00</span>
+                                <span class="meeting-topic">Vlerësimi i Njëmujorit</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Salla e Mësuesve</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Vlerësimi i Njëmujorit')">
+                                        <i class="fas fa-file-alt"></i> Protokolli
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-redo"></i> Përsërit
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="meeting-item">
+                                <span class="meeting-date">20 Mars 2023 - 14:00</span>
+                                <span class="meeting-topic">Përgatitje për Provimet</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Salla e Konferencave</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Përgatitje për Provimet')">
+                                        <i class="fas fa-file-alt"></i> Protokolli
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-redo"></i> Përsërit
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="meeting-item">
+                                <span class="meeting-date">15 Shkurt 2023 - 11:00</span>
+                                <span class="meeting-topic">Rishikim i Kurrikulës</span>
+                                <span class="meeting-location"><i class="fas fa-map-marker-alt"></i> Laboratori i Informatikës</span>
+                                <div class="meeting-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showMeetingModal('Rishikim i Kurrikulës')">
+                                        <i class="fas fa-file-alt"></i> Protokolli
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-redo"></i> Përsërit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="scheduleMeeting" class="tab-content">
+                            <div class="add-new-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="meetingDate"><i class="fas fa-calendar"></i> Data</label>
+                                        <input type="date" id="meetingDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="meetingTime"><i class="fas fa-clock"></i> Ora</label>
+                                        <input type="time" id="meetingTime" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="meetingTopic"><i class="fas fa-comment"></i> Tema e Mbledhjes</label>
+                                    <input type="text" id="meetingTopic" class="form-control" placeholder="Shkruani temën e mbledhjes">
+                                </div>
+                                <div class="form-group">
+                                    <label for="meetingLocation"><i class="fas fa-map-marker-alt"></i> Vendndodhja</label>
+                                    <select id="meetingLocation" class="form-control">
+                                        <option value="salla_mesuesve">Salla e Mësuesve</option>
+                                        <option value="salla_konferencave">Salla e Konferencave</option>
+                                        <option value="laboratori_informatikes">Laboratori i Informatikës</option>
+                                        <option value="biblioteka">Biblioteka</option>
+                                        <option value="tjeter">Tjetër</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="meetingParticipants"><i class="fas fa-users"></i> Pjesëmarrësit</label>
+                                    <select id="meetingParticipants" class="form-control" multiple>
+                                        <option value="all">I gjithë stafi</option>
+                                        <option value="teachers">Mësuesit</option>
+                                        <option value="admins">Stafi administrativ</option>
+                                        <option value="grade1">Mësuesit e Klasës 1</option>
+                                        <option value="grade2">Mësuesit e Klasës 2</option>
+                                        <option value="grade3">Mësuesit e Klasës 3</option>
+                                        <option value="grade4">Mësuesit e Klasës 4</option>
+                                        <option value="grade5">Mësuesit e Klasës 5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="meetingAgenda"><i class="fas fa-list-ol"></i> Axhenda</label>
+                                    <textarea id="meetingAgenda" class="form-control" rows="4" placeholder="Shtoni pikat e axhendës (një për rresht)"></textarea>
+                                </div>
+                                <button class="btn btn-success"><i class="fas fa-calendar-plus"></i> Planifiko Mbledhjen</button>
+                            </div>
+                        </div>
+                        
+                        <div id="meetingCalendar" class="tab-content">
+                            <div class="calendar-preview">
+                                <div class="calendar-header">
+                                    <div class="calendar-month">Maj 2023</div>
+                                    <div>
+                                        <button class="btn btn-sm btn-primary"><i class="fas fa-chevron-left"></i></button>
+                                        <button class="btn btn-sm btn-primary">Sot</button>
+                                        <button class="btn btn-sm btn-primary"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid">
+                                    <div class="calendar-day-header">H</div>
+                                    <div class="calendar-day-header">M</div>
+                                    <div class="calendar-day-header">M</div>
+                                    <div class="calendar-day-header">E</div>
+                                    <div class="calendar-day-header">P</div>
+                                    <div class="calendar-day-header">Sh</div>
+                                    <div class="calendar-day-header">D</div>
+                                    
+                                    <div class="calendar-day other-month">30</div>
+                                    <div class="calendar-day">1</div>
+                                    <div class="calendar-day">2</div>
+                                    <div class="calendar-day">3</div>
+                                    <div class="calendar-day">4</div>
+                                    <div class="calendar-day">5</div>
+                                    <div class="calendar-day">6</div>
+                                    <div class="calendar-day">7</div>
+                                    <div class="calendar-day">8</div>
+                                    <div class="calendar-day">9</div>
+                                    <div class="calendar-day">10</div>
+                                    <div class="calendar-day">11</div>
+                                    <div class="calendar-day">12</div>
+                                    <div class="calendar-day">13</div>
+                                    <div class="calendar-day">14</div>
+                                    <div class="calendar-day today">15</div>
+                                    <div class="calendar-day">16</div>
+                                    <div class="calendar-day">17</div>
+                                    <div class="calendar-day">18</div>
+                                    <div class="calendar-day">19</div>
+                                    <div class="calendar-day">20</div>
+                                    <div class="calendar-day">21</div>
+                                    <div class="calendar-day event">22</div>
+                                    <div class="calendar-day">23</div>
+                                    <div class="calendar-day">24</div>
+                                    <div class="calendar-day">25</div>
+                                    <div class="calendar-day">26</div>
+                                    <div class="calendar-day">27</div>
+                                    <div class="calendar-day">28</div>
+                                    <div class="calendar-day">29</div>
+                                    <div class="calendar-day">30</div>
+                                    <div class="calendar-day">31</div>
+                                    <div class="calendar-day other-month">1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Trajnimet</h3>
+                    <p>Organizoni, gjurmoni dhe menaxhoni trajnimet për mësuesit dhe stafin e shkollës.</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleSection('trainingsContent')">
+                        <i class="fas fa-graduation-cap"></i> Shiko Trajnimet
+                    </button>
+                    
+                    <div class="section-content" id="trainingsContent">
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="openTab(event, 'upcomingTrainings')">
+                                <i class="fas fa-clock"></i> Trajnimet e Ardhshme
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'completedTrainings')">
+                                <i class="fas fa-check-circle"></i> Trajnimet e Përfunduara
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'addTraining')">
+                                <i class="fas fa-plus"></i> Shto Trajnim të Ri
+                            </button>
+                            <button class="tab-btn" onclick="openTab(event, 'trainingStats')">
+                                <i class="fas fa-chart-bar"></i> Statistikat
+                            </button>
+                        </div>
+                        
+                        <div id="upcomingTrainings" class="tab-content active">
+                            <div class="training-item">
+                                <span class="training-date">18 Maj 2023 - 09:00</span>
+                                <span class="training-topic">Teknologji të Reja në Edukim</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Dr. Arben Shehu</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Teknologji të Reja në Edukim')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="training-item">
+                                <span class="training-date">25 Qershor 2023 - 10:00</span>
+                                <span class="training-topic">Menaxhimi i Klasës</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Prof. Luljeta Demiri</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Menaxhimi i Klasës')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="training-item">
+                                <span class="training-date">10 Korrik 2023 - 11:00</span>
+                                <span class="training-topic">Psikologji e Fëmijëve</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Dr. Shqiponja Hoxha</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Psikologji e Fëmijëve')">
+                                        <i class="fas fa-info-circle"></i> Detaje
+                                    </button>
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Ndrysho
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times"></i> Anulo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="completedTrainings" class="tab-content">
+                            <div class="training-item">
+                                <span class="training-date">10 Shkurt 2023 - 09:00</span>
+                                <span class="training-topic">Metodologji të Reja Mësimore</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Prof. Agim Krasniqi</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Metodologji të Reja Mësimore')">
+                                        <i class="fas fa-file-alt"></i> Materialet
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-chart-bar"></i> Vlerësimi
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="training-item">
+                                <span class="training-date">15 Janar 2023 - 10:00</span>
+                                <span class="training-topic">Siguria në Internet</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Ing. Driton Berisha</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Siguria në Internet')">
+                                        <i class="fas fa-file-alt"></i> Materialet
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-chart-bar"></i> Vlerësimi
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="training-item">
+                                <span class="training-date">05 Dhjetor 2022 - 14:00</span>
+                                <span class="training-topic">Trajnim për Platformën Digjitale</span>
+                                <span class="training-trainer"><i class="fas fa-user-tie"></i> Ing. Besnik Rexhepi</span>
+                                <div class="training-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="showTrainingModal('Trajnim për Platformën Digjitale')">
+                                        <i class="fas fa-file-alt"></i> Materialet
+                                    </button>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-chart-bar"></i> Vlerësimi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="addTraining" class="tab-content">
+                            <div class="add-new-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="trainingDate"><i class="fas fa-calendar"></i> Data</label>
+                                        <input type="date" id="trainingDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="trainingTime"><i class="fas fa-clock"></i> Ora</label>
+                                        <input type="time" id="trainingTime" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingTopic"><i class="fas fa-comment"></i> Tema e Trajnimit</label>
+                                    <input type="text" id="trainingTopic" class="form-control" placeholder="Shkruani temën e trajnimit">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="trainingTrainer"><i class="fas fa-user-tie"></i> Trajneri</label>
+                                        <input type="text" id="trainingTrainer" class="form-control" placeholder="Emri i trajnerit">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="trainingDuration"><i class="fas fa-hourglass-half"></i> Kohëzgjatja (orë)</label>
+                                        <input type="number" id="trainingDuration" class="form-control" min="1" value="2">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingLocation"><i class="fas fa-map-marker-alt"></i> Vendndodhja</label>
+                                    <select id="trainingLocation" class="form-control">
+                                        <option value="salla_mesuesve">Salla e Mësuesve</option>
+                                        <option value="salla_konferencave">Salla e Konferencave</option>
+                                        <option value="laboratori_informatikes">Laboratori i Informatikës</option>
+                                        <option value="biblioteka">Biblioteka</option>
+                                        <option value="online">Online</option>
+                                        <option value="tjeter">Tjetër</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingParticipants"><i class="fas fa-users"></i> Pjesëmarrësit</label>
+                                    <select id="trainingParticipants" class="form-control" multiple>
+                                        <option value="all">I gjithë stafi</option>
+                                        <option value="teachers">Mësuesit</option>
+                                        <option value="grade1_5">Mësuesit e Klasave 1-5</option>
+                                        <option value="grade6_9">Mësuesit e Klasave 6-9</option>
+                                        <option value="admins">Stafi administrativ</option>
+                                        <option value="new_teachers">Mësuesit e Rinj</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingDescription"><i class="fas fa-align-left"></i> Përshkrimi</label>
+                                    <textarea id="trainingDescription" class="form-control" rows="4" placeholder="Përshkrim i detajuar i trajnimit"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingMaterials"><i class="fas fa-paperclip"></i> Materialet (Opsionale)</label>
+                                    <input type="file" id="trainingMaterials" class="form-control" multiple>
+                                </div>
+                                <button class="btn btn-success"><i class="fas fa-calendar-plus"></i> Shto Trajnimin</button>
+                            </div>
+                        </div>
+                        
+                        <div id="trainingStats" class="tab-content">
+                            <div class="stats-container">
+                                <div class="stat-card">
+                                    <div class="stat-label"><i class="fas fa-chalkboard-teacher"></i> Trajnime Total</div>
+                                    <div class="stat-value">24</div>
+                                    <div class="stat-label">Që nga Janari 2022</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label"><i class="fas fa-users"></i> Pjesëmarrje Mesatare</div>
+                                    <div class="stat-value">78%</div>
+                                    <div class="stat-label">Në të gjitha trajnimet</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label"><i class="fas fa-star"></i> Vlerësim Mesatar</div>
+                                    <div class="stat-value">4.6</div>
+                                    <div class="stat-label">Nga 5.0</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="margin-top: 1.5rem; margin-bottom: 1rem;"><i class="fas fa-chart-pie"></i> Shpërndarja e Trajnimeve sipas Kategorive</h4>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #3498db; border-radius: 2px; margin-right: 8px;"></span>
+                                        <span>Metodologji Mësimore</span>
+                                    </div>
+                                    <span>8 trajnime</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #2ecc71; border-radius: 2px; margin-right: 8px;"></span>
+                                        <span>Teknologji Edukative</span>
+                                    </div>
+                                    <span>6 trajnime</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #e74c3c; border-radius: 2px; margin-right: 8px;"></span>
+                                        <span>Psikologji</span>
+                                    </div>
+                                    <span>4 trajnime</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #f39c12; border-radius: 2px; margin-right: 8px;"></span>
+                                        <span>Menaxhim Klasash</span>
+                                    </div>
+                                    <span>3 trajnime</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #9b59b6; border-radius: 2px; margin-right: 8px;"></span>
+                                        <span>Të Tjerë</span>
+                                    </div>
+                                    <span>3 trajnime</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal për dokumentet -->
+    <div class="modal" id="documentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="documentModalTitle">Dokumenti</h3>
+                <button class="close-modal" onclick="closeModal('documentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Data e Publikimit</label>
+                    <p>15 Maj 2023</p>
+                </div>
+                <div class="form-group">
+                    <label>Kategoria</label>
+                    <p>Rregullore</p>
+                </div>
+                <div class="form-group">
+                    <label>Përshkrimi</label>
+                    <p>Ky dokument përmban rregulloret e reja të shkollës për vitin shkollor 2023-2024, duke përfshirë politikën e sjelljes, procedurat administrative dhe rregullat e klasës.</p>
+                </div>
+                <div class="form-group">
+                    <label>Versioni</label>
+                    <p>2.1</p>
+                </div>
+                <div class="form-group">
+                    <label>Ngarkuar nga</label>
+                    <p>Admin Shkolla</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"><i class="fas fa-download"></i> Shkarko Dokumentin</button>
+                <button class="btn" onclick="closeModal('documentModal')"><i class="fas fa-times"></i> Mbyll</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal për mbledhjet -->
+    <div class="modal" id="meetingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="meetingModalTitle">Mbledhja</h3>
+                <button class="close-modal" onclick="closeModal('meetingModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data dhe Ora</label>
+                        <p>15 Maj 2023 - 10:00</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendndodhja</label>
+                        <p>Salla e Mësuesve</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Organizator</label>
+                    <p>Drejtori i Shkollës</p>
+                </div>
+                <div class="form-group">
+                    <label>Pjesëmarrësit</label>
+                    <p>Të gjithë mësuesit dhe stafi administrativ</p>
+                </div>
+                <div class="form-group">
+                    <label>Axhenda</label>
+                    <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Hyrje dhe prezantim</li>
+                        <li>Rishikim i performancës së nxënësve</li>
+                        <li>Diskutim për aktivitetet e ardhshme</li>
+                        <li>Çështje të ndryshme</li>
+                    </ol>
+                </div>
+                <div class="form-group">
+                    <label>Shënime</label>
+                    <p>Ju lutem sillni me vete kopjen e raporteve të fundit të nxënësve.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"><i class="fas fa-file-pdf"></i> Shkarko Ftesën</button>
+                <button class="btn btn-success"><i class="fas fa-calendar-plus"></i> Shto në Kalendar</button>
+                <button class="btn" onclick="closeModal('meetingModal')"><i class="fas fa-times"></i> Mbyll</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal për trajnimet -->
+    <div class="modal" id="trainingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="trainingModalTitle">Trajnimi</h3>
+                <button class="close-modal" onclick="closeModal('trainingModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data dhe Ora</label>
+                        <p>18 Maj 2023 - 09:00</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendndodhja</label>
+                        <p>Laboratori i Informatikës</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Trajneri</label>
+                        <p>Dr. Arben Shehu</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Kohëzgjatja</label>
+                        <p>3 orë</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Përshkrimi</label>
+                    <p>Ky trajnim do të fokusohet në teknologjitë më të reja në edukim, duke përfshirë përdorimin e platformave digjitale, mjeteve të ndërveprimit në klasë dhe metodave për të përmirësuar përvojën e të nxënit.</p>
+                </div>
+                <div class="form-group">
+                    <label>Pjesëmarrësit</label>
+                    <p>Të gjithë mësuesit e klasave 1-5</p>
+                </div>
+                <div class="form-group">
+                    <label>Materialet</label>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Prezantimi - Teknologjitë në Edukim.pdf</li>
+                        <li>Udhëzues për Platformën Digjitale.docx</li>
+                        <li>Lista e Burimeve të Dobishme.xlsx</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"><i class="fas fa-download"></i> Shkarko Materialet</button>
+                <button class="btn btn-success"><i class="fas fa-calendar-plus"></i> Shto në Kalendar</button>
+                <button class="btn" onclick="closeModal('trainingModal')"><i class="fas fa-times"></i> Mbyll</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulimi i login-it
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('loginError');
+            
+            // Validimi i thjeshtë (në praktikë përdorni verifikim të sigurt)
+            if (username === 'Shpresa' && password === 'Shpresa12345678') {
+                // Login i suksesshëm
+                errorElement.textContent = '';
+                
+                // Animojmë daljen e formës së login-it
+                document.getElementById('loginForm').classList.add('hidden');
+                
+                // Vendosim emrin e përdoruesit
+                document.getElementById('adminName').textContent = username;
+                
+                // Pas një vonese të shkurtër, shfaqim faqen administrative
+                setTimeout(() => {
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('adminPage').classList.add('active');
+                }, 300);
+                
+            } else {
+                // Login i dështuar
+                errorElement.textContent = 'Kredencialet janë të pasakta!';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Funksioni për logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // Fshehim faqen administrative
+            document.getElementById('adminPage').classList.remove('active');
+            
+            // Shfaqim përsëri formën e login-it
+            document.getElementById('loginContainer').style.display = 'flex';
+            
+            // Pas një vonese të shkurtër, animojmë hyrjen e formës
+            setTimeout(() => {
+                document.getElementById('loginForm').classList.remove('hidden');
+            }, 300);
+            
+            // Resetojmë formën
+            document.getElementById('adminLoginForm').reset();
+            document.getElementById('loginError').textContent = '';
+        });
+
+        // Funksioni për toggle të seksioneve
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+            
+            // Mbyllim modalet nëse janë të hapura
+            closeAllModals();
+        }
+
+        // Funksioni për ndërrimin e tab-ve
+        function openTab(evt, tabName) {
+            // Merr të gjithë elementet me klasë tab-content dhe fshiji klasën active
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Merr të gjithë butonat e tab-ve dhe fshiji klasën active
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Shfaq tab-in aktual dhe shto klasën active në butonin e klikuar
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Funksionet për modalet
+        function showDocumentModal(title) {
+            document.getElementById('documentModalTitle').textContent = title;
+            document.getElementById('documentModal').style.display = 'flex';
+        }
+
+        function showMeetingModal(title) {
+            document.getElementById('meetingModalTitle').textContent = title;
+            document.getElementById('meetingModal').style.display = 'flex';
+        }
+
+        function showTrainingModal(title) {
+            document.getElementById('trainingModalTitle').textContent = title;
+            document.getElementById('trainingModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function closeAllModals() {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                modals[i].style.display = 'none';
+            }
+        }
+
+        // Mbyllim modalet kur klikohet jashtë tyre
+        window.addEventListener('click', function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target === modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        });
+
+        // Bllokojmë klikimin e djathtë dhe inspect element
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert('Kjo veprim nuk lejohet në këtë faqe!');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Bllokojmë F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+                (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                alert('Kjo veprim nuk lejohet në këtë faqe!');
+            }
+        });
+    </script>
+</body>
+</html>

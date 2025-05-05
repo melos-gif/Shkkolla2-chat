@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShMT "Lutfi Musiqi"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SHMT "Lutfi Musqi" </span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Ballina</a></li>
+                    <li><a href="projektet.html">Projektet</a></li>
+                    <li><a href="stafi.html">Stafi</a></li>
+                    <li><a href="libraria.html">Libraria</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="chat.html">Chat</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="loginBtn">Hyr</button>
+                <button class="btn btn-primary" id="registerBtn">Regjistrohu</button>
+            </div>
+        </div>
+    </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Chat Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .group-list {
+      list-style: none;
+      padding: 0;
+    }
+    .group-list li {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #34495e;
+      margin-bottom: 5px;
+    }
+    .group-list li.active {
+      background-color: #1abc9c;
+    }
+    .chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .message {
+      margin-bottom: 15px;
+    }
+    .message .sender {
+      font-weight: bold;
+      position: relative;
+    }
+    .message .sender:hover .tooltip {
+      display: block;
+    }
+    .tooltip {
+      display: none;
+      position: absolute;
+      top: 25px;
+      left: 0;
+      background: #333;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 13px;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    .input-box {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+    .input-box input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .input-box input[type="file"] {
+      margin-left: 10px;
+    }
+    .input-box button {
+      padding: 10px 15px;
+      margin-left: 10px;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Qendra e Komunikimit</h2>
+      <ul class="group-list">
+        <li class="active">XI-10-Bazat e Robotikes </li>
+        <li>XI-10-BET2</li>
+        <li>XI-10-Senzor dhe Aktuator  </li>
+        <li>XI-10-Matematika</li>
+        <li>XI-10-Gjuha Shqipe</li>
+        <li>XI-10-Teknologji dhe Programim</li>
+        <li>XI-10-Mekanik Teknike</li>
+        <li>XI-10-Fizik</li>
+        <li>XI-10-Pneumatik dhe Hidraulik</li>
+        <li>XI-10-Ekonomi</li>
+        <li>Gjuh Agnleze</li>
+      </ul>
+    </div>
+    <div class="chat">
+      <div class="messages" id="messages">
+        <div class="message">
+          <div class="sender">Shpresa Dibrani <span class="tooltip">Shpresa Dibrani<br>Email: shpresadibrani123@gmai.com<br>Phone: 045-448-788</span></div>
+          <div class="text">Përshëndetje, klasë! Unë jam profesoresha Shpresa. Nga sot e tutje, ju mund të informoheni në këtë faqe dhe të bëni pyetje rreth mësimit.
+          </div>
+        </div>
+        <div class="message">
+          <div class="sender">Melos <span class="tooltip">Melos Zeqiri<br>Email: zeqirimelos153@gmail.com<br>Phone: 044-222-333</span></div>
+          <div class="text">Pershendetje.</div>
+        
+        </div>
+        <div class="message">
+            <div class="sender">Riad<span class="tooltip">Riad Mustafa<br>Email: riadmustafa153@gmail.com<br>Phone: 044-554-519</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+          <div class="message">
+            <div class="sender">Muhamet <span class="tooltip">Muhamet Gerguri<br>Email: muhametgerguri153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender">Adriatik<span class="tooltip">Adriatik Musliu<br>Email: adriatikmusliu153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender">Ledri<span class="tooltip">Ledri Imeri<br>Email: ledriimeri153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender">Median <span class="tooltip">Median Ferizi<br>Email: medianferizi153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender">Milot <span class="tooltip">Milot Ferati<br>Email: milotferati153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender"> Gzim<span class="tooltip">Gzim Zhabari<br>Email: gzimzhabari153@gmail<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+          <div class="message">
+            <div class="sender">Elma <span class="tooltip">Elma Pllana<br>Email: elmapllana153@gmail.com<br>Phone: 044-222-333</span></div>
+            <div class="text">Pershendetje.</div>
+          </div>
+
+         
+        
+
+      </div>
+      <div class="input-box">
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <input type="file" id="fileInput" accept="image/*">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const messageText = document.getElementById('messageInput').value;
+      const fileInput = document.getElementById('fileInput');
+      const messages = document.getElementById('messages');
+
+      if (messageText.trim() !== '') {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.innerHTML = `
+          <div class="sender">You <span class="tooltip">You<br>Email: you@example.com<br>Phone: 000-000-0000</span></div>
+          <div class="text">${messageText}</div>
+        `;
+        messages.appendChild(messageDiv);
+      }
+
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.maxWidth = '200px';
+          img.style.display = 'block';
+          const imageMsg = document.createElement('div');
+          imageMsg.classList.add('message');
+          imageMsg.innerHTML = `
+            <div class="sender">You <span class="tooltip">You<br>Email: you@example.com<br>Phone: 000-000-0000</span></div>
+          `;
+          imageMsg.appendChild(img);
+          messages.appendChild(imageMsg);
+        }
+        reader.readAsDataURL(file);
+      }
+
+      document.getElementById('messageInput').value = '';
+      fileInput.value = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forma e Kontaktit</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .required-field::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulari i Kontaktit</h1>
+        
+        <div class="success-message" id="successMessage">
+            Faleminderit për mesazhin tuaj! Do t'ju kontaktojmë së shpejti.
+        </div>
+        
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name" class="required-field">Emri i plotë</label>
+                <input type="text" id="name" name="name" placeholder="Shkruani emrin tuaj të plotë">
+                <div class="error-message" id="nameError">Ju lutem shkruani emrin tuaj të plotë</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="required-field">Email</label>
+                <input type="email" id="email" name="email" placeholder="Shkruani adresën tuaj të emailit">
+                <div class="error-message" id="emailError">Ju lutem shkruani një email të vlefshëm</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Numri i telefonit</label>
+                <input type="tel" id="phone" name="phone" placeholder="Shkruani numrin tuaj të telefonit">
+                <div class="error-message" id="phoneError">Ju lutem shkruani një numër të vlefshëm</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject" class="required-field">Subjekti</label>
+                <select id="subject" name="subject">
+                    <option value="" disabled selected>Zgjidhni një opsion</option>
+                    <option value="pyetje">Pyetje</option>
+                    <option value="ankesë">Ankesë</option>
+                    <option value="bashkëpunim">Bashkëpunim</option>
+                    <option value="tjeter">Tjetër</option>
+                </select>
+                <div class="error-message" id="subjectError">Ju lutem zgjidhni një subjekt</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="message" class="required-field">Mesazhi</label>
+                <textarea id="message" name="message" placeholder="Shkruani mesazhin tuaj këtu..."></textarea>
+                <div class="error-message" id="messageError">Ju lutem shkruani mesazhin tuaj</div>
+            </div>
+            
+            <button type="submit" class="btn btn-block">Dërgo mesazhin</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value.trim();
+            
+            let isValid = true;
+            
+            // Validate name
+            if (name === '') {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '' || !emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate phone (if provided)
+            if (phone !== '' && !/^[0-9+\-\s]+$/.test(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate subject
+            if (!subject) {
+                document.getElementById('subjectError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate message
+            if (message === '') {
+                document.getElementById('messageError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // If form is valid, show success message
+            if (isValid) {
+                // Here you would typically send the data to a server
+                // For this example, we'll just show a success message
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('contactForm').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            }
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            const x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+    </script>
+</body>
+</html>

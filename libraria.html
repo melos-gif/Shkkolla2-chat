@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librara e "SHMT" Lutfi Musiqi</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 50%;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--light);
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+        
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .book-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .book-cover {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .book-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .book-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .book-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .book-author {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .book-description {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+            flex-grow: 1;
+        }
+        
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .book-actions .btn {
+            flex-grow: 1;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-favorite {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-favorite.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-details {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pagination button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pagination button:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #777;
+        }
+        
+        .book-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .book-detail-header {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .book-detail-cover {
+            flex: 0 0 200px;
+            height: 250px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+        
+        .book-detail-info {
+            flex-grow: 1;
+        }
+        
+        .book-detail-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .book-detail-author {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .book-detail-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .book-detail-description {
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .book-detail-header {
+                flex-direction: column;
+            }
+            
+            .book-detail-cover {
+                width: 100%;
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Librari<span>Tek</span></a>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Kërko librat...">
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="user-actions">
+                    <button class="btn btn-outline">Regjistrohu</button>
+                    <button class="btn btn-primary">Kyçu</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="category">Kategoria:</label>
+                <select id="category">
+                    <option value="all">Të gjitha</option>
+                    <option value="programming">Programimi</option>
+                    <option value="web">Web Development</option>
+                    <option value="ai">Inteligjenca Artificiale</option>
+                    <option value="security">Siguria Kibernetike</option>
+                    <option value="databases">Bazat e të Dhënave</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="sort">Rendit sipas:</label>
+                <select id="sort">
+                    <option value="newest">Më të rejat</option>
+                    <option value="oldest">Më të vjetrat</option>
+                    <option value="title">Titulli (A-Z)</option>
+                    <option value="author">Autori (A-Z)</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="book-grid" id="bookGrid">
+            <!-- Librat do të ngarkohen këtu me JavaScript -->
+        </div>
+        
+        <div class="pagination">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+        </div>
+    </main>
+    
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="book-detail" id="bookDetail">
+                <!-- Detajet e librit do të ngarkohen këtu -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Të dhënat e librave
+        const books = [
+            {
+                id: 1,
+                title: "Clean Code: Një Kodër i Artë i Programimit",
+                author: "Robert C. Martin",
+                year: 2008,
+                category: "programming",
+                description: "Ky libër mëson parimet e shkrimit të kodit të pastër, të lexueshëm dhe të mirëorganizuar. Është një udhëzues i domosdoshëm për çdo zhvillues softueri.",
+                cover: "https://m.media-amazon.com/images/I/41xShlnTZTL._SY425_.jpg",
+                pages: 464,
+                rating: 4.7,
+                isFavorite: false
+            },
+            {
+                id: 2,
+                title: "The Pragmatic Programmer",
+                author: "Andrew Hunt, David Thomas",
+                year: 1999,
+                category: "programming",
+                description: "Një koleksion i këshillave praktike dhe të përvojave të vlefshme për zhvillimin efikas të softuerit. Një libër themelor për çdo programues.",
+                cover: "https://m.media-amazon.com/images/I/51A8l+FxFNL._SY425_.jpg",
+                pages: 352,
+                rating: 4.6,
+                isFavorite: true
+            },
+            {
+                id: 3,
+                title: "Design Patterns: Elementet e Softuerit të Ripërdorshëm të Orientuar nga Objekti",
+                author: "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+                year: 1994,
+                category: "programming",
+                description: "Një koleksion i modeleve të dizajnit që ofrojnë zgjidhje të përgjithshme për problemet e zakonshme në zhvillimin e softuerit.",
+                cover: "https://m.media-amazon.com/images/I/51szD9HC9pL._SY425_.jpg",
+                pages: 395,
+                rating: 4.7,
+                isFavorite: false
+            },
+            {
+                id: 4,
+                title: "JavaScript: Pjesët e Mira",
+                author: "Douglas Crockford",
+                year: 2008,
+                category: "web",
+                description: "Një eksplorim i thellë i pjesëve më të mira të JavaScript, duke ofruar një kuptim më të thellë të gjuhës.",
+                cover: "https://m.media-amazon.com/images/I/81zWsOMWE4L._AC_UF1000,1000_QL80_.jpg",
+                pages: 153,
+                rating: 4.3,
+                isFavorite: false
+            },
+            {
+                id: 5,
+                title: "Hacking: Arti i Eksploatimit",
+                author: "Jon Erickson",
+                year: 2003,
+                category: "security",
+                description: "Një udhëzues praktik që mëson teknikat e hakingut dhe mbrojtjen kundër tyre.",
+                cover: "https://m.media-amazon.com/images/I/81VrvsAwAmL.jpg",
+                pages: 480,
+                rating: 4.5,
+                isFavorite: false
+            },
+            {
+                id: 6,
+                title: "Inteligjenca Artificiale: Një Qasje Moderne",
+                author: "Stuart Russell, Peter Norvig",
+                year: 1995,
+                category: "ai",
+                description: "Libri më i përdorur në botë për të mësuar konceptet themelore të inteligjencës artificiale.",
+                cover: "https://m.media-amazon.com/images/I/610+0VFgdJL._AC_UF1000,1000_QL80_.jpg",
+                pages: 1132,
+                rating: 4.5,
+                isFavorite: true
+            },
+            {
+                id: 7,
+                title: "SQL për Njerëzit e Pafajshëm",
+                author: "John L. Viescas",
+                year: 2018,
+                category: "databases",
+                description: "Një udhëzues i thjeshtë dhe i qartë për të mësuar SQL dhe menaxhimin e bazave të të dhënave.",
+                cover: "https://m.media-amazon.com/images/I/61ScAom8qYL._AC_UF1000,1000_QL80_.jpg",
+                pages: 480,
+                rating: 4.6,
+                isFavorite: false
+            },
+            {
+                id: 8,
+                title: "React: Programimi i Frontend-it Modern",
+                author: "Alex Banks, Eve Porcello",
+                year: 2020,
+                category: "web",
+                description: "Një udhëzues i plotë për të mësuar React dhe zhvillimin e aplikacioneve moderne të web-it.",
+                cover: "https://m.media-amazon.com/images/I/518+W2zr3BL._AC_UF1000,1000_QL80_.jpg",
+                pages: 350,
+                rating: 4.4,
+                isFavorite: false
+            }
+        ];
+        
+        // DOM Elementet
+        const bookGrid = document.getElementById('bookGrid');
+        const bookModal = document.getElementById('bookModal');
+        const bookDetail = document.getElementById('bookDetail');
+        const closeModal = document.getElementById('closeModal');
+        const categoryFilter = document.getElementById('category');
+        const sortFilter = document.getElementById('sort');
+        const searchInput = document.querySelector('.search-bar input');
+        
+        // Funksioni për të shfaqur librat në grid
+        function displayBooks(booksToDisplay) {
+            bookGrid.innerHTML = '';
+            
+            booksToDisplay.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                
+                bookCard.innerHTML = `
+                    <div class="book-cover">
+                        ${book.cover ? `<img src="${book.cover}" alt="${book.title}">` : book.title}
+                        <span class="book-badge">${book.category}</span>
+                    </div>
+                    <div class="book-content">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <p class="book-description">${book.description.substring(0, 100)}...</p>
+                        <div class="book-meta">
+                            <span>${book.year}</span>
+                            <span>${book.pages} faqe</span>
+                            <span>★ ${book.rating}</span>
+                        </div>
+                        <div class="book-actions">
+                            <button class="btn btn-favorite ${book.isFavorite ? 'active' : ''}" data-id="${book.id}">
+                                ${book.isFavorite ? '♥ E preferuar' : '♡ Shto në preferenca'}
+                            </button>
+                            <button class="btn btn-details" data-id="${book.id}">Detajet</button>
+                        </div>
+                    </div>
+                `;
+                
+                bookGrid.appendChild(bookCard);
+            });
+            
+            // Shtoj event listeners për butonat
+            document.querySelectorAll('.btn-favorite').forEach(btn => {
+                btn.addEventListener('click', toggleFavorite);
+            });
+            
+            document.querySelectorAll('.btn-details').forEach(btn => {
+                btn.addEventListener('click', showBookDetails);
+            });
+        }
+        
+        // Funksioni për të ndryshuar statusin e preferencave
+        function toggleFavorite(e) {
+            const bookId = parseInt(e.target.getAttribute('data-id'));
+            const book = books.find(b => b.id === bookId);
+            
+            if (book) {
+                book.isFavorite = !book.isFavorite;
+                e.target.classList.toggle('active');
+                e.target.textContent = book.isFavorite ? '♥ E preferuar' : '♡ Shto në preferenca';
+            }
+        }
+        
+        // Funksioni për të shfaqur detajet e librit
+        function showBookDetails(e) {
+            const bookId = parseInt(e.target.getAttribute('data-id'));
+            const book = books.find(b => b.id === bookId);
+            
+            if (book) {
+                bookDetail.innerHTML = `
+                    <div class="book-detail-header">
+                        <div class="book-detail-cover">
+                            ${book.cover ? `<img src="${book.cover}" alt="${book.title}">` : book.title}
+                        </div>
+                        <div class="book-detail-info">
+                            <h1 class="book-detail-title">${book.title}</h1>
+                            <p class="book-detail-author">${book.author}</p>
+                            <div class="book-detail-meta">
+                                <span>${book.year}</span>
+                                <span>${book.pages} faqe</span>
+                                <span>★ ${book.rating}</span>
+                                <span>${book.category}</span>
+                            </div>
+                            <button class="btn btn-favorite ${book.isFavorite ? 'active' : ''}" data-id="${book.id}">
+                                ${book.isFavorite ? '♥ E preferuar' : '♡ Shto në preferenca'}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="book-detail-description">
+                        <h3>Përshkrimi</h3>
+                        <p>${book.description}</p>
+                    </div>
+                `;
+                
+                // Shtoj event listener për butonin e preferencave në modal
+                bookDetail.querySelector('.btn-favorite').addEventListener('click', toggleFavorite);
+                
+                // Shfaq modal-in
+                bookModal.style.display = 'flex';
+            }
+        }
+        
+        // Funksioni për filtrimin dhe renditjen e librave
+        function filterAndSortBooks() {
+            const category = categoryFilter.value;
+            const sort = sortFilter.value;
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            let filteredBooks = books;
+            
+            // Filtro sipas kategorisë
+            if (category !== 'all') {
+                filteredBooks = filteredBooks.filter(book => book.category === category);
+            }
+            
+            // Filtro sipas kërkimit
+            if (searchTerm) {
+                filteredBooks = filteredBooks.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm) || 
+                    book.author.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Rendit librat
+            switch (sort) {
+                case 'newest':
+                    filteredBooks.sort((a, b) => b.year - a.year);
+                    break;
+                case 'oldest':
+                    filteredBooks.sort((a, b) => a.year - b.year);
+                    break;
+                case 'title':
+                    filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'author':
+                    filteredBooks.sort((a, b) => a.author.localeCompare(b.author));
+                    break;
+            }
+            
+            displayBooks(filteredBooks);
+        }
+        
+        // Event Listeners
+        categoryFilter.addEventListener('change', filterAndSortBooks);
+        sortFilter.addEventListener('change', filterAndSortBooks);
+        searchInput.addEventListener('input', filterAndSortBooks);
+        closeModal.addEventListener('click', () => {
+            bookModal.style.display = 'none';
+        });
+        
+        // Mbyll modal-in kur klikohet jashtë
+        window.addEventListener('click', (e) => {
+            if (e.target === bookModal) {
+                bookModal.style.display = 'none';
+            }
+        });
+        
+        // Shfaq librat në fillim
+        displayBooks(books);
+    </script>
+</body>
+</html>

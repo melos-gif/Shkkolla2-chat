@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShMT "Lutfi Musiqi"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SHMT "Lutfi Musqi" </span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Ballina</a></li>
+                    <li><a href="projektet.html">Projektet</a></li>
+                    <li><a href="stafi.html">Stafi</a></li>
+                    <li><a href="libraria.html">Libraria</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="chat.html">Chat</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="loginBtn">Hyr</button>
+                <button class="btn btn-primary" id="registerBtn">Regjistrohu</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="container">
+        <section class="hero">
+            <h1>SHMT "Lutfi Musiqi"</h1>
+            <p>Platforma moderne për menaxhimin e shkollës, komunikim dhe mësim në distancë</p>
+            <button class="btn btn-primary" id="exploreBtn">Eksploro Tani</button>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>Libraria Digjitale</h3>
+                <p>Akseso të gjitha librat dhe materialet shkollore në një vend të vetëm.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Ndiq Notat</h3>
+                <p>Shiko notat e tua dhe ndjek progresin në çdo lëndë në kohë reale.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Orari Interaktiv</h3>
+                <p>Menaxho orarin tënd me lehtësi me ndërfaqen moderne.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard (Hidden until login) -->
+    <div class="container dashboard" id="dashboard">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#notat" class="active"><i class="fas fa-chart-line"></i> Notat e Mia</a></li>
+                <li><a href="#orari"><i class="fas fa-calendar-alt"></i> Orari</a></li>
+                <li><a href="#libraria"><i class="fas fa-book"></i> Libraria</a></li>
+                <li><a href="#mesazhet"><i class="fas fa-comments"></i> Mesazhet</a></li>
+                <li><a href="#profili"><i class="fas fa-user"></i> Profili</a></li>
+                <li><a href="#dil"><i class="fas fa-sign-out-alt"></i> Dil</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Grades Section -->
+            <section id="notat-section">
+                <h2 class="section-title">Notat e Mia</h2>
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Lënda</th>
+                            <th>Nota</th>
+                            <th>Semestri</th>
+                            <th>Mësuesi</th>
+                            <th>Veprime</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- Grades will be loaded here -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Schedule Section -->
+            <section id="orari-section" style="display: none;">
+                <h2 class="section-title">Orari i Klasave</h2>
+                <div class="schedule" id="scheduleContainer">
+                    <!-- Schedule will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Library Section -->
+            <section id="libraria-section" style="display: none;">
+                <h2 class="section-title">Libraria Digjitale</h2>
+                <div class="library-grid" id="libraryContainer">
+                    <!-- Books will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Chat Section -->
+            <section id="mesazhet-section" style="display: none;">
+                <h2 class="section-title">Mesazhet</h2>
+                <div class="chat-container">
+                    <div class="chat-users">
+                        <h3>Kontakte</h3>
+                        <div class="chat-user active">
+                            <div class="chat-user-avatar">AZ</div>
+                            <div class="chat-user-info">
+                                <h4>Avni Z.</h4>
+                                <p>Profesor i Matematikës</p>
+                            </div>
+                        </div>
+                        <div class="chat-user">
+                            <div class="chat-user-avatar">EH</div>
+                            <div class="chat-user-info">
+                                <h4>Ernest H.</h4>
+                                <p>Profesor i Organizimit te kompjuterve</p>
+                            </div>
+                        </div>
+                        <div class="chat-user">
+                            <div class="chat-user-avatar">SH</div>
+                            <div class="chat-user-info">
+                                <h4>Selatin H.</h4>
+                                <p>Nxënes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="messages-list" id="messagesList">
+                            <div class="message message-incoming">
+                                <div class="message-sender">Avni Z.</div>
+                                <div class="message-text">Përshëndetje! Ju kujtoj se provimi i matematikës është të enjten.</div>
+                            </div>
+                            <div class="message message-outgoing">
+                                <div class="message-sender">Ju</div>
+                                <div class="message-text">Faleminderit për kujtesën!</div>
+                            </div>
+                        </div>
+                        <div class="message-input">
+                            <input type="text" placeholder="Shkruani mesazhin tuaj..." id="messageInput">
+                            <button class="btn btn-primary" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Hyr në Llogari</h2>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Fjalëkalimi</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="closeLoginModal">Mbylle</button>
+                    <button type="submit" class="btn btn-primary">Hyr</button>
+                </div>
+                <div class="form-footer">
+                    Nuk keni llogari? <a href="#" id="showRegisterModalLink">Regjistrohu</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Krijo Llogari</h2>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Emri i Plotë</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Fjalëkalimi</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Konfirmo Fjalëkalimin</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="closeRegisterModal">Mbylle</button>
+                    <button type="submit" class="btn btn-primary">Regjistrohu</button>
+                </div>
+                <div class="form-footer">
+                    Keni llogari? <a href="#" id="showLoginModalLink">Hyr</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Shtoje këtë para tagut </body> -->
+
+<!-- Super Footer -->
+<footer class="super-footer">
+    <div class="footer-container">
+        <!-- Kolona 1: Informacione kontakti specifike -->
+        <div class="footer-column">
+            <h3>Shkolla e Mesme "Lutfi Musiqi"</h3>
+            <div class="contact-info">
+                <p><i class="fas fa-map-marker-alt"></i> Rruga e Shkronjave, Nr. 15, Vushtrri, Kosovë</p>
+                <p><i class="fas fa-phone"></i> +383 28 530 123</p>
+                <p><i class="fas fa-envelope"></i> info@shkollalutfimusiqi.edu</p>
+                <p><i class="fas fa-clock"></i> Orari: Hënë-Premte, 07:30-19:00</p>
+                <p><i class="fas fa-user-tie"></i> Drejtori: Ibrahim Lahu</p>
+            </div>
+        </div>
+
+        <!-- Kolona 2: Lidhje të shpejta për nxënësit -->
+        <div class="footer-column">
+            <h3>Për Nxënësit</h3>
+            <ul class="quick-links">
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Orari i Klasave</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Planet Mësimore</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Aktivitetet Jashtëshkollore</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Biblioteka Digjitale</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Projekte Shkencore</a></li>
+                <li><a href="quiz.html"><i class="fas fa-chevron-right"></i> Kuizi Online</a></li>
+            </ul>
+        </div>
+
+        <!-- Kolona 3: Harta e Vushtrrisë me shkollën -->
+        <div class="footer-column">
+            <h3>Vendndodhja Jonë</h3>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.942039600654!2d20.96786031546603!3d42.6588228791676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13536f7910ebf0a7%3A0x3b6b8a6a1a3f0!2sVushtrri%2C%20Kosovo!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
+                        width="100%" 
+                        height="200" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                </iframe>
+                <p class="map-note"><i class="fas fa-map-pin"></i> Shkolla "Lutfi Musiqi" në qendër të Vushtrrisë</p>
+            </div>
+        </div>
+
+        <!-- Kolona 4: Newsletter dhe Social Media -->
+        <div class="footer-column">
+            <h3>Lajmet e Fundit</h3>
+            <p>Regjistrohu për të marrë njoftimet e fundit nga shkolla</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Emaili juaj" required>
+                <button type="submit" class="btn-subscribe">Regjistrohu</button>
+            </form>
+
+            <div class="social-media">
+                <h3>Rrjetet Sociale</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer fundor me informacione juridike -->
+    <div class="footer-bottom">
+        <div class="footer-bottom-container">
+            <p>&copy; 2025 Shkolla e Mesme "Lutfi Musiqi" Vushtrri. Të gjitha të drejtat e rezervuara.</p>
+            <div class="legal-links">
+                <a href="#"><i class="fas fa-balance-scale"></i> Rregullorja e Shkollës</a>
+                <a href="#"><i class="fas fa-user-shield"></i> Mbrojtja e të Dhënave</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Dokumentet Themelore</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <script src="script.js">
+  
+    </script>
+</body>
+</html>

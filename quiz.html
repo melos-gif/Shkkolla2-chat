@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Kuiz Teknologjik</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option {
+            padding: 12px;
+            background-color: var(--light-color);
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .option.selected {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .option.correct {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .option.incorrect {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: 1px solid var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--dark-color);
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 0 5px 5px 0;
+            display: none;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .results-container {
+            text-align: center;
+            display: none;
+        }
+
+        .results-container h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .badge.difficulty-1 {
+            background-color: var(--success-color);
+        }
+
+        .badge.difficulty-2 {
+            background-color: #f39c12;
+        }
+
+        .badge.difficulty-3 {
+            background-color: var(--accent-color);
+        }
+
+        .feedback-form {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Super Kuiz Teknologjik</h1>
+            <p>Testoni njohuritë tuaja në HTML, CSS dhe JavaScript</p>
+        </header>
+
+        <div class="quiz-info">
+            <div class="question-count">Pyetja <span id="current-question">1</span>/<span id="total-questions">10</span></div>
+            <div class="timer">Koha: <span id="time">60</span>s</div>
+            <div class="score-display">Pikët: <span id="current-score">0</span></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div id="quiz-container">
+            <div class="question-container">
+                <div class="question" id="question"></div>
+                <div class="options" id="options"></div>
+                <div class="explanation" id="explanation"></div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn-secondary" id="prev-btn" disabled>Prapa</button>
+                <button class="btn-primary" id="next-btn">Tjetra</button>
+                <button class="btn-accent" id="submit-btn" style="display: none;">Dërgo Përgjigjet</button>
+            </div>
+        </div>
+
+        <div id="results-container" class="results-container">
+            <h2>Rezultatet tuaja</h2>
+            <div class="score">Ju keni <span id="final-score">0</span>/<span id="max-score">100</span> pikë</div>
+            <p id="result-message"></p>
+            <button class="btn-primary" id="restart-btn">Fillo Përsëri</button>
+
+            <div class="feedback-form">
+                <h3>Feedback</h3>
+                <p>Na tregoni përvojën tuaj me këtë kuiz</p>
+                <textarea id="feedback" placeholder="Shkruani komentin tuaj këtu..."></textarea>
+                <button class="btn-primary" id="send-feedback">Dërgo Feedback</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Të dhënat e kuizit
+        const quizData = [
+            {
+                question: "Çfarë do të thotë HTML?",
+                options: [
+                    "Hyper Text Markup Language",
+                    "Home Tool Markup Language",
+                    "Hyperlinks and Text Markup Language",
+                    "High Tech Modern Language"
+                ],
+                answer: 0,
+                explanation: "HTML qëndron për Hyper Text Markup Language. Është gjuha standarde për krijimin e faqeve web.",
+                difficulty: 1
+            },
+            {
+                question: "Cili nga elementët e mëposhtëm HTML përdoret për të përcaktuar stilizimin më të mirë të një faqeje?",
+                options: [
+                    "<style>",
+                    "<script>",
+                    "<meta>",
+                    "<link>"
+                ],
+                answer: 3,
+                explanation: "Elementi <link> përdoret për të lidhur dokumentin HTML me stilizimet e definuara në një skedar CSS të jashtëm.",
+                difficulty: 2
+            },
+            {
+                question: "Cila veti CSS përdoret për të ndryshuar ngjyrën e tekstit?",
+                options: [
+                    "text-color",
+                    "font-color",
+                    "color",
+                    "text-style"
+                ],
+                answer: 2,
+                explanation: "Vetia 'color' në CSS përdoret për të përcaktuar ngjyrën e tekstit të një elementi.",
+                difficulty: 1
+            },
+            {
+                question: "Çfarë do të kthejë shprehja JavaScript: '5' + 3?",
+                options: [
+                    "8",
+                    "53",
+                    "Error",
+                    "undefined"
+                ],
+                answer: 1,
+                explanation: "Në JavaScript, operatori '+' kur përdoret me një varg (string) dhe një numër, shndërron numrin në varg dhe kryen lidhjen (concatenation). Kjo është arsyeja pse '5' + 3 kthen '53'.",
+                difficulty: 2
+            },
+            {
+                question: "Cili metodë JavaScript përdoret për të ekzekutuar një funksion pas një intervali të caktuar kohor?",
+                options: [
+                    "setInterval()",
+                    "setTimeout()",
+                    "executeAfter()",
+                    "waitFor()"
+                ],
+                answer: 1,
+                explanation: "Metoda setTimeout() ekzekuton një funksion ose një pjesë kodi pas një intervali të caktuar kohor (në milisekonda).",
+                difficulty: 2
+            },
+            {
+                question: "Cila nga të mëposhtmet është mënyra e saktë për të deklaruar një variabël në JavaScript?",
+                options: [
+                    "variable name;",
+                    "var name;",
+                    "v name;",
+                    "declare name;"
+                ],
+                answer: 1,
+                explanation: "Në JavaScript, variablat mund të deklarohen duke përdorur fjalët kyçe 'var', 'let' ose 'const'.",
+                difficulty: 1
+            },
+            {
+                question: "Çfarë bën metoda CSS 'flexbox'?",
+                options: [
+                    "Krijon një layout fleksibël",
+                    "Shton efekte animacioni",
+                    "Kontrollon madhësinë e fontit",
+                    "Krijon gradientë të ngjyrave"
+                ],
+                answer: 0,
+                explanation: "Flexbox është një model layout në CSS i cili lejon elementet të rreshtohen dhe të shpërndahen në mënyrë fleksibël brenda një kontejneri.",
+                difficulty: 3
+            },
+            {
+                question: "Cili element HTML përdoret për të shfaqur rezultatin e një llogaritjeje?",
+                options: [
+                    "<calculation>",
+                    "<math>",
+                    "<output>",
+                    "<result>"
+                ],
+                answer: 2,
+                explanation: "Elementi <output> përdoret për të shfaqur rezultatin e një llogaritjeje ose të një veprimi të kryer nga një skript.",
+                difficulty: 3
+            },
+            {
+                question: "Cila nga të mëposhtmet është një pseudo-klasë CSS?",
+                options: [
+                    ":visible",
+                    ":display",
+                    ":hover",
+                    ":color"
+                ],
+                answer: 2,
+                explanation: ":hover është një pseudo-klasë CSS që përdoret për të stilizuar një element kur përdoruesi e mban mbi të kursorin e miut.",
+                difficulty: 2
+            },
+            {
+                question: "Çfarë do të kthejë typeof null në JavaScript?",
+                options: [
+                    "null",
+                    "undefined",
+                    "object",
+                    "string"
+                ],
+                answer: 2,
+                explanation: "Kjo është një gabim i njohur në JavaScript. typeof null kthen 'object', edhe pse null nuk është objekt.",
+                difficulty: 3
+            }
+        ];
+
+        // Variablat e kuizit
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let timeLeft = 60;
+        let timer;
+
+        // Elementet DOM
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const explanationElement = document.getElementById('explanation');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const nextButton = document.getElementById('next-btn');
+        const prevButton = document.getElementById('prev-btn');
+        const submitButton = document.getElementById('submit-btn');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const finalScoreElement = document.getElementById('final-score');
+        const maxScoreElement = document.getElementById('max-score');
+        const resultMessageElement = document.getElementById('result-message');
+        const restartButton = document.getElementById('restart-btn');
+        const timeElement = document.getElementById('time');
+        const currentScoreElement = document.getElementById('current-score');
+
+        // Inicializimi i kuizit
+        function initQuiz() {
+            totalQuestionsElement.textContent = quizData.length;
+            loadQuestion();
+            startTimer();
+        }
+
+        // Ngarkimi i pyetjeve
+        function loadQuestion() {
+            const questionData = quizData[currentQuestion];
+            questionElement.innerHTML = `<span class="badge difficulty-${questionData.difficulty}">Niveli ${questionData.difficulty}</span> ${questionData.question}`;
+            
+            optionsElement.innerHTML = '';
+            questionData.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                if (userAnswers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsElement.appendChild(optionElement);
+            });
+
+            currentQuestionElement.textContent = currentQuestion + 1;
+            progressBar.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+
+            prevButton.disabled = currentQuestion === 0;
+            nextButton.style.display = currentQuestion === quizData.length - 1 ? 'none' : 'block';
+            submitButton.style.display = currentQuestion === quizData.length - 1 ? 'block' : 'none';
+
+            // Fshi shpjegimin nëse ekziston
+            explanationElement.style.display = 'none';
+            explanationElement.textContent = '';
+        }
+
+        // Zgjedhja e opsionit
+        function selectOption(index) {
+            // Hiq zgjedhjen e mëparshme nëse ka
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Shto zgjedhjen e re
+            options[index].classList.add('selected');
+            userAnswers[currentQuestion] = index;
+        }
+
+        // Kontrollimi i përgjigjes
+        function checkAnswer() {
+            if (userAnswers[currentQuestion] === null) return false;
+
+            const questionData = quizData[currentQuestion];
+            const options = document.querySelectorAll('.option');
+
+            // Shfaq përgjigjen e saktë dhe shpjegimin
+            options[questionData.answer].classList.add('correct');
+            if (userAnswers[currentQuestion] !== questionData.answer) {
+                options[userAnswers[currentQuestion]].classList.add('incorrect');
+            }
+
+            explanationElement.textContent = questionData.explanation;
+            explanationElement.style.display = 'block';
+
+            // Llogarit pikët nëse përgjigja është e saktë
+            if (userAnswers[currentQuestion] === questionData.answer) {
+                score += questionData.difficulty * 10; // Më shumë pikë për pyetje të vështira
+                currentScoreElement.textContent = score;
+            }
+
+            return userAnswers[currentQuestion] === questionData.answer;
+        }
+
+        // Butoni Next
+        nextButton.addEventListener('click', () => {
+            if (userAnswers[currentQuestion] === null) {
+                alert('Ju lutem zgjidhni një përgjigje përpara se të vazhdoni!');
+                return;
+            }
+
+            checkAnswer();
+            currentQuestion++;
+            loadQuestion();
+        });
+
+        // Butoni Previous
+        prevButton.addEventListener('click', () => {
+            currentQuestion--;
+            loadQuestion();
+        });
+
+        // Butoni Submit
+        submitButton.addEventListener('click', () => {
+            checkAnswer();
+            showResults();
+        });
+
+        // Butoni Restart
+        restartButton.addEventListener('click', () => {
+            resetQuiz();
+        });
+
+        // Shfaq rezultatet
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+
+            const maxScore = quizData.reduce((sum, question) => sum + question.difficulty * 10, 0);
+            finalScoreElement.textContent = score;
+            maxScoreElement.textContent = maxScore;
+
+            const percentage = (score / maxScore) * 100;
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = 'Shkëlqyeshëm! Ju keni njohuri të shkëlqyera në teknologjinë web.';
+            } else if (percentage >= 60) {
+                message = 'Mirë! Ju keni njohuri të mira, por ka vend për përmirësim.';
+            } else if (percentage >= 40) {
+                message = 'Mesatar. Ju lutem rishikoni konceptet bazë.';
+            } else {
+                message = 'Ju duhet të punoni më shumë në këto teknologji. Mos u dekurajoni!';
+            }
+
+            resultMessageElement.textContent = message;
+            clearInterval(timer);
+        }
+
+        // Resetimi i kuizit
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            timeLeft = 60;
+            
+            quizContainer.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            currentScoreElement.textContent = '0';
+            timeElement.textContent = timeLeft;
+            
+            clearInterval(timer);
+            startTimer();
+            loadQuestion();
+        }
+
+        // Timer
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 60;
+            timeElement.textContent = timeLeft;
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                timeElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        // Feedback
+        document.getElementById('send-feedback').addEventListener('click', () => {
+            const feedback = document.getElementById('feedback').value;
+            if (feedback.trim() !== '') {
+                alert('Faleminderit për feedback-in tuaj!');
+                document.getElementById('feedback').value = '';
+            } else {
+                alert('Ju lutem shkruani feedback-in tuaj përpara se ta dërgoni.');
+            }
+        });
+
+        // Fillimi i kuizit
+        initQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekte Teknike | Shkolla e Mesme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="PROJEKTET.css">
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>Projekte Teknike</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Kryefaqja</a></li>
+                    <li><a href="stafi.html">Stafi</a></li>
+                    <li><a href="libraria.html">Libraria</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Inovacion Teknologjik nga Nxënësit</h1>
+        <p>Zbuloni projektet teknologjike të zhvilluara nga nxënësit e shkollës sonë të mesme</p>
+        <button class="btn btn-primary">Shiko Projektet</button>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Featured Project -->
+        <section id="featured">
+            <div class="featured-project">
+                <div class="featured-image">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Projekti i veçantë">
+                </div>
+                <div class="featured-content">
+                    <span class="featured-category">Robotikë & Automatizim</span>
+                    <h2 class="featured-title">Sistemi i Automatizimit të Shtëpisë me IoT</h2>
+                    <div class="featured-meta">
+                        <span class="featured-date"><i class="far fa-calendar-alt"></i> 15 Maj 2023</span>
+                        <span><i class="fas fa-user-graduate"></i> Nxënësit e klasës XI</span>
+                    </div>
+                    <div class="featured-tech">
+                        <span class="tech-tag">Arduino</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">MQTT</span>
+                    </div>
+                    <p class="featured-description">
+                        Ky projekt shqyrton mundësinë e përdorimit të teknologjisë IoT për automatizimin e sistemeve të shtëpisë. 
+                        Nxënësit kanë zhvilluar një prototip që integron sensorë dhe pajisje të ndryshme për të kontrolluar sistemin e ndriçimit, 
+                        ngrohjes dhe sigurisë së shtëpisë në distancë.
+                    </p>
+                    <div class="project-actions">
+                        <button class="btn btn-primary">Lexo Më Shumë</button>
+                        <button class="btn btn-outline"><i class="fas fa-code-branch"></i> Shiko Kodin</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2 class="section-title">Projektet Tona Teknike</h2>
+            
+            <div class="categories">
+                <button class="category-btn active">Të Gjitha</button>
+                <button class="category-btn">Robotikë</button>
+                <button class="category-btn">Programim</button>
+                <button class="category-btn">IoT</button>
+                <button class="category-btn">AI/ML</button>
+                <button class="category-btn">Elektronikë</button>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80" alt="Roboti për dezinfektim">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">VR Projector</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Grupi i Robotikës</span>
+                            <span class="project-category">Robotikë</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Raspberry Pi</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                        </div>
+                        <p class="project-description">
+                            Një VR Projector (Projektor Realiteti Virtual) është një pajisje e avancuar që integron projektimin 3D me teknologjinë e Realitetit Virtual (VR) për të krijuar një përvojë imersive pa nevojën për syze VR tradicionale.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://img001.video2b.com/255/file_01640588115512.jpg?x-oss-process=image/format,webp" alt="Sistemi i parkimit inteligjent">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Sistemi i Parkimit Inteligjent</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Selatin H. & Bleron M.</span>
+                            <span class="project-category">IoT</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">ESP32</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Flutter</span>
+                        </div>
+                        <p class="project-description">
+                            Një sistem i bazuar në sensorë për zbulimin e vendeve të lira të parkimit dhe shfaqjen e tyre në një aplikacion mobil.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Njohja e fytyrave">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Sistemi i Njohjes së Fytyrave për Qasje</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Endrit Sh. & Selatin H.</span>
+                            <span class="project-category">AI/ML</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">OpenCV</span>
+                        </div>
+                        <p class="project-description">
+                            Një sistem sigurie që përdor njohjen e fytyrave për të identifikuar personat dhe për të kontrolluar qasjen në ambiente të mbrojtura.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOsrCA-Jn7c6SQEpc6-4Zn5hhutXlq3quK9g&s" alt="Monitorimi i cilësisë së ajrit">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Sistemi i Monitorimit të Cilësisë së Ajrit</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Selatin H. & Melos Z.</span>
+                            <span class="project-category">IoT</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Arduino</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">React</span>
+                        </div>
+                        <p class="project-description">
+                            Një sistem i shpërndarë për monitorimin e parametrave të cilësisë së ajrit në kohë reale dhe raportimin e tyre në një platformë web.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.xiaorgeek.net/cdn/shop/files/Black_Bionic_Programmable_Smart_Humanoid_Robot.jpg?v=1725355424" alt="Asistenti virtual">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Asistenti Virtual për Nxënësit</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Selatin h. & Melos Z.</span>
+                            <span class="project-category">AI/ML</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">C#</span>
+                        </div>
+                        <p class="project-description">
+                            Një asistent virtual i bazuar në përpunimin e gjuhës natyrore që ndihmon nxënësit me pyetje rreth lëndëve shkollore dhe detyrave.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMlPGqwbPw5287zjOBl_Vnp3jbzxIRlAyWyg&s" alt="Simulatori i trafikut">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Simulator i Trafikut Urban</h3>
+                        <div class="project-meta">
+                            <span><i class="far fa-user"></i> Selatin H.</span>
+                            <span class="project-category">Programim</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">AI</span>
+                        </div>
+                        <p class="project-description">
+                            Një simulator 3D i trafikut urban që modelon fluksin e trafikut dhe optimizon kohën e pritjes në semaforë bazuar në densitetin e trafikut.
+                        </p>
+                        <div class="project-actions">
+                            <button class="btn btn-primary">Detaje</button>
+                            <button class="btn btn-outline"><i class="fas fa-code-branch"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">Rreth Klubit Tonë Teknologjik</h2>
+            <div style="background-color: white; padding: 2rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                <p style="margin-bottom: 1rem; line-height: 1.7;">
+                    Klubi ynë teknologjik është krijuar për të nxitur kreativitetin dhe zhvillimin e aftësive teknike te nxënësit e shkollës sonë. 
+                    Nëpërmjet punës në projekte praktike, nxënësit fitojnë njohuri të thella në fusha si programimi, robotika, inteligjenca artificiale dhe Interneti i Gjërave.
+                </p>
+                <p style="margin-bottom: 1rem; line-height: 1.7;">
+                    Çdo vit organizojmë një ekspozitë ku nxënësit prezentojnë projektet e tyre përpara gjykuesve dhe publikut. Projektet më të mira marrin çmime dhe mundësi për të përfaqësuar shkollën tonë në konkurse kombëtare dhe ndërkombëtare.
+                </p>
+                <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                    <button class="btn btn-primary">Bëhu Pjesë e Klubit</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+
+<!-- Super Footer -->
+<footer class="super-footer">
+    <div class="footer-container">
+        <!-- Kolona 1: Informacione kontakti specifike -->
+        <div class="footer-column">
+            <h3>Shkolla e Mesme "Lutfi Musiqi"</h3>
+            <div class="contact-info">
+                <p><i class="fas fa-map-marker-alt"></i> Rruga e Shkronjave, Nr. 15, Vushtrri, Kosovë</p>
+                <p><i class="fas fa-phone"></i> +383 28 530 123</p>
+                <p><i class="fas fa-envelope"></i> info@shkollalutfimusiqi.edu</p>
+                <p><i class="fas fa-clock"></i> Orari: Hënë-Premte, 07:30-19:00</p>
+                <p><i class="fas fa-user-tie"></i> Drejtori: Ibrahim Lahu</p>
+            </div>
+        </div>
+
+        <!-- Kolona 2: Lidhje të shpejta për nxënësit -->
+        <div class="footer-column">
+            <h3>Për Nxënësit</h3>
+            <ul class="quick-links">
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Orari i Klasave</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Planet Mësimore</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Aktivitetet Jashtëshkollore</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Biblioteka Digjitale</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Projekte Shkencore</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Kuizi Online</a></li>
+            </ul>
+        </div>
+
+        <!-- Kolona 3: Harta e Vushtrrisë me shkollën -->
+        <div class="footer-column">
+            <h3>Vendndodhja Jonë</h3>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.942039600654!2d20.96786031546603!3d42.6588228791676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13536f7910ebf0a7%3A0x3b6b8a6a1a3f0!2sVushtrri%2C%20Kosovo!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
+                        width="100%" 
+                        height="200" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                </iframe>
+                <p class="map-note"><i class="fas fa-map-pin"></i> Shkolla "Lutfi Musiqi" në qendër të Vushtrrisë</p>
+            </div>
+        </div>
+
+        <!-- Kolona 4: Newsletter dhe Social Media -->
+        <div class="footer-column">
+            <h3>Lajmet e Fundit</h3>
+            <p>Regjistrohu për të marrë njoftimet e fundit nga shkolla</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Emaili juaj" required>
+                <button type="submit" class="btn-subscribe">Regjistrohu</button>
+            </form>
+
+            <div class="social-media">
+                <h3>Rrjetet Sociale</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer fundor me informacione juridike -->
+    <div class="footer-bottom">
+        <div class="footer-bottom-container">
+            <p>&copy; 2025 Shkolla e Mesme "Lutfi Musiqi" Vushtrri. Të gjitha të drejtat e rezervuara.</p>
+            <div class="legal-links">
+                <a href="#"><i class="fas fa-balance-scale"></i> Rregullorja e Shkollës</a>
+                <a href="#"><i class="fas fa-user-shield"></i> Mbrojtja e të Dhënave</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Dokumentet Themelore</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Kategoritë e projekteve
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hiq klasën active nga të gjitha butonat
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Shto klasën active në butonin e klikuar
+                btn.classList.add('active');
+                
+                // Në një aplikacion real, këtu do të bëhej filtrimi i projekteve
+                // Për demonstrim, ne thjesht do të shfaqim një alert
+                alert(`Do të shfaqeshin projektet e kategorisë: ${btn.textContent}`);
+            });
+        });
+        
+        // Butoni i detajeve të projektit
+        const projectDetailBtns = document.querySelectorAll('.project-actions .btn-primary');
+        projectDetailBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const projectTitle = btn.closest('.project-card').querySelector('.project-title').textContent;
+                alert(`Do të shfaqeshin detajet e projektit: ${projectTitle}\nKjo do të hapte një faqe të re me të gjitha detajet e projektit.`);
+            });
+        });
+
+        // Butoni për të parë kodin
+        const codeBtns = document.querySelectorAll('.btn-outline');
+        codeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectTitle = btn.closest('.project-card').querySelector('.project-title').textContent;
+                alert(`Do të ridrejtoheshit në repositorin GitHub për projektin: ${projectTitle}`);
+            });
+        });
+
+        
+    </script>
+</body>
+</html>
